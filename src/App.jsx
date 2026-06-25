@@ -8,6 +8,7 @@ import RemoteCollab from './chapters/RemoteCollab.jsx'
 import Conflict from './chapters/Conflict.jsx'
 import Stash from './chapters/Stash.jsx'
 import Gitignore from './chapters/Gitignore.jsx'
+import AICoding from './chapters/AICoding.jsx'
 import Reference from './chapters/Reference.jsx'
 import Cheatsheet from './chapters/Cheatsheet.jsx'
 
@@ -21,6 +22,7 @@ const CHAPTERS = [
   { id: 'conflict', label: '合并冲突手把手', Comp: Conflict },
   { id: 'stash', label: 'git stash 实战', Comp: Stash },
   { id: 'gitignore', label: '.gitignore 详解', Comp: Gitignore },
+  { id: 'aicoding', label: 'AI coding 中用 git', Comp: AICoding },
   { id: 'reference', label: '概念与命令速查', Comp: Reference },
   { id: 'cheatsheet', label: '速查卡（可打印）', Comp: Cheatsheet },
 ]
