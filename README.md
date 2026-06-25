@@ -36,6 +36,8 @@ npm run preview  # 预览构建产物
 
 在线地址：https://elfish2025-crypto.github.io/git-learn/
 
+每章配有「常见踩坑 & 避坑」卡片和自测题，边学边纠错。
+
 ## 技术栈
 
 - React 18 + Vite 5，零运行时 UI 依赖

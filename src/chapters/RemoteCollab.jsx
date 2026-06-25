@@ -1,6 +1,7 @@
 import React from 'react'
 import Quiz from '../components/Quiz.jsx'
-import { QUIZZES } from '../data.js'
+import Pitfall from '../components/Pitfall.jsx'
+import { QUIZZES, PITFALLS } from '../data.js'
 
 export default function RemoteCollab() {
   return (
@@ -82,6 +83,7 @@ git push                   # 现在能推上去了`}</div>
         <strong style={{ fontWeight: 500 }}>一条红线：</strong>永远不要对已经 push、别人在用的分支用 <code>git push --force</code>。它会抹掉别人的提交。万不得已要改写已推送历史，用 <code>--force-with-lease</code>（更安全，会先检查没覆盖别人的新提交）。
       </div>
 
+      <Pitfall items={PITFALLS.remote} />
       <Quiz title="自测 · 远程协作" items={QUIZZES.remote} />
     </div>
   )

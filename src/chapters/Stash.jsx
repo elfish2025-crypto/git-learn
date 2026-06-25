@@ -1,6 +1,7 @@
 import React from 'react'
 import Quiz from '../components/Quiz.jsx'
-import { QUIZZES } from '../data.js'
+import Pitfall from '../components/Pitfall.jsx'
+import { QUIZZES, PITFALLS } from '../data.js'
 
 export default function Stash() {
   return (
@@ -58,6 +59,7 @@ git stash pop              # 把改动取回来，继续干`}</div>
         <strong style={{ fontWeight: 500 }}>stash vs worktree：</strong>两者都解决"做一半被打断"。stash 轻量、适合<strong style={{ fontWeight: 500 }}>短暂</strong>切换（收起→切走→很快回来）；worktree 重一点但能让两条线<strong style={{ fontWeight: 500 }}>同时存在</strong>，适合需要长时间并行、来回对照的场景（见"实战工作流"第 12 步）。
       </div>
 
+      <Pitfall items={PITFALLS.stash} />
       <Quiz title="自测 · git stash" items={QUIZZES.stash} />
     </div>
   )

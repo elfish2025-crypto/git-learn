@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import { CM_FOCUS, CM_ALL, CM_NOTE, CM_CHIPS } from '../data.js'
+import Quiz from '../components/Quiz.jsx'
+import Pitfall from '../components/Pitfall.jsx'
+import { CM_FOCUS, CM_ALL, CM_NOTE, CM_CHIPS, QUIZZES, PITFALLS } from '../data.js'
 
 export default function ConceptMap() {
   const [sel, setSel] = useState('all')
@@ -64,6 +66,9 @@ export default function ConceptMap() {
           </div>
         )}
       </div>
+
+      <Pitfall items={PITFALLS.conceptmap} />
+      <Quiz title="自测 · 概念协作" items={QUIZZES.conceptmap} />
     </div>
   )
 }

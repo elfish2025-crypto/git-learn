@@ -153,6 +153,15 @@ svg text.th { fill: var(--color-text-primary); }
 .quiz-opt.wrong { border-color: #A32D2D; background: rgba(226,75,74,0.1); }
 .quiz-explain { font-size: 14px; line-height: 1.7; margin-top: 8px; padding: 10px 12px; border-radius: var(--border-radius-md); background: var(--color-background-secondary); }
 
+/* ===== 避坑卡片 ===== */
+.pitfall { border: 0.5px solid var(--color-border-tertiary); border-left: 3px solid #BA7517; border-radius: var(--border-radius-lg); background: var(--color-background-primary); padding: 14px 16px; margin: 18px 0; }
+.pitfall-head { font-weight: 500; font-size: 15px; color: #BA7517; margin-bottom: 8px; }
+.pitfall-item { padding: 9px 0; border-top: 0.5px solid var(--color-border-tertiary); }
+.pitfall-item:first-of-type { border-top: none; padding-top: 2px; }
+.pitfall-trap { font-size: 14px; line-height: 1.65; color: var(--color-text-primary); }
+.pitfall-fix { font-size: 14px; line-height: 1.65; color: var(--color-text-secondary); margin-top: 2px; }
+.pitfall-trap code, .pitfall-fix code { background: var(--color-background-secondary); }
+
 /* ===== 步进器 ===== */
 .dots { display: flex; gap: 5px; justify-content: center; flex-wrap: wrap; margin: 6px 0 8px; }
 .dot-btn { width: 11px; height: 11px; border-radius: 50%; border: none; padding: 0; cursor: pointer; background: var(--color-border-secondary); }

@@ -1,6 +1,7 @@
 import React from 'react'
 import Quiz from '../components/Quiz.jsx'
-import { QUIZZES } from '../data.js'
+import Pitfall from '../components/Pitfall.jsx'
+import { QUIZZES, PITFALLS } from '../data.js'
 
 export default function FourAreas() {
   return (
@@ -50,6 +51,7 @@ export default function FourAreas() {
       <h2>为什么要有"暂存区"这一层？</h2>
       <p>很多人一开始觉得 add 多余。它的价值在于：让你<strong style={{ fontWeight: 500 }}>挑选</strong>这次要提交什么。你可能改了 5 个文件，但其中 2 个属于功能 A、3 个属于功能 B——通过 <code>git add</code> 分两次暂存、分两次提交，历史就清清楚楚，而不是混成一坨。</p>
 
+      <Pitfall items={PITFALLS.fourareas} />
       <Quiz title="自测 · 四个区" items={QUIZZES.basics} />
     </div>
   )
