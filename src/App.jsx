@@ -5,6 +5,9 @@ import ConceptMap from './chapters/ConceptMap.jsx'
 import Workflow from './chapters/Workflow.jsx'
 import DecisionTree from './chapters/DecisionTree.jsx'
 import RemoteCollab from './chapters/RemoteCollab.jsx'
+import Conflict from './chapters/Conflict.jsx'
+import Stash from './chapters/Stash.jsx'
+import Gitignore from './chapters/Gitignore.jsx'
 import Reference from './chapters/Reference.jsx'
 import Cheatsheet from './chapters/Cheatsheet.jsx'
 
@@ -15,6 +18,9 @@ const CHAPTERS = [
   { id: 'workflow', label: '实战工作流', Comp: Workflow },
   { id: 'decision', label: '回退决策', Comp: DecisionTree },
   { id: 'remote', label: '远程协作', Comp: RemoteCollab },
+  { id: 'conflict', label: '合并冲突手把手', Comp: Conflict },
+  { id: 'stash', label: 'git stash 实战', Comp: Stash },
+  { id: 'gitignore', label: '.gitignore 详解', Comp: Gitignore },
   { id: 'reference', label: '概念与命令速查', Comp: Reference },
   { id: 'cheatsheet', label: '速查卡（可打印）', Comp: Cheatsheet },
 ]
