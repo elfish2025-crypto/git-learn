@@ -159,4 +159,20 @@ export const QUIZZES = {
       o: [{ t: 'git pull --rebase', c: true }, { t: 'git pull --force', c: false }, { t: 'git push --rebase', c: false }],
       e: 'pull --rebase 把你本地的提交"重放"到远程最新提交之上，避免每次拉取都产生一个 merge 提交，历史更干净。' },
   ],
+  conflict: [
+    { q: '合并时出现冲突，git 自动帮你选了一边的代码吗？',
+      o: [{ t: '不会，它把两边都标出来，让你决定', c: true }, { t: '会，自动选较新的那次提交', c: false }, { t: '会，自动选 main 上的版本', c: false }],
+      e: '冲突恰恰是 git 不敢替你猜的地方：同一处两个人都改了。它用 <<<<<<< ======= >>>>>>> 把两边都标出来，把选择权交给你。' },
+    { q: '解决完冲突文件后，继续合并的正确动作是？',
+      o: [{ t: 'git add <文件> 标记已解决，再 commit 或 rebase --continue', c: true }, { t: '直接 git push', c: false }, { t: '什么都不用做，保存文件即可', c: false }],
+      e: '改好文件、删掉冲突标记后，要用 git add 告诉 git"这个冲突我处理好了"；merge 场景接着 git commit，rebase 场景用 git rebase --continue。' },
+  ],
+  stash: [
+    { q: '你正改到一半（工作区是脏的），突然要切到别的分支救急。最轻量的做法是？',
+      o: [{ t: 'git stash 把改动收进抽屉，切走，回来再 git stash pop', c: true }, { t: '随便 commit 一个"临时"提交', c: false }, { t: '把文件复制到别处备份', c: false }],
+      e: 'stash 把未提交改动（工作区+暂存区）打包压进一个栈，让工作区瞬间变干净，便于切分支；回来 git stash pop 取回。比留一个垃圾提交干净得多。' },
+    { q: 'git stash pop 和 git stash apply 的区别？',
+      o: [{ t: 'pop 取回并从栈里删除；apply 取回但保留在栈里', c: true }, { t: '完全一样', c: false }, { t: 'pop 只取暂存区，apply 只取工作区', c: false }],
+      e: 'apply 取回改动但 stash 仍留在栈里（可重复应用到多个分支）；pop = apply + drop，取回后顺手把这条 stash 删掉。' },
+  ],
 }
