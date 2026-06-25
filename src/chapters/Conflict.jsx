@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Quiz from '../components/Quiz.jsx'
-import { QUIZZES } from '../data.js'
+import Pitfall from '../components/Pitfall.jsx'
+import { QUIZZES, PITFALLS } from '../data.js'
 
 const CONFLICT = `function greet(name) {
 <<<<<<< HEAD
@@ -71,6 +72,7 @@ git commit                 # merge 场景：提交即完成
       </table>
       <p style={{ fontSize: 14, color: 'var(--color-text-secondary)' }}>提示：在 rebase 里，<code>ours</code> / <code>theirs</code> 的含义会反过来（因为是把你的提交重放到对方基底上），拿不准时优先手动看内容，别盲信 ours/theirs。</p>
 
+      <Pitfall items={PITFALLS.conflict} />
       <Quiz title="自测 · 合并冲突" items={QUIZZES.conflict} />
     </div>
   )

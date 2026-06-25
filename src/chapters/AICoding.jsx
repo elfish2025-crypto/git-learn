@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Quiz from '../components/Quiz.jsx'
-import { QUIZZES } from '../data.js'
+import Pitfall from '../components/Pitfall.jsx'
+import { QUIZZES, PITFALLS } from '../data.js'
 
 const PROMPTS = [
   ['开工前建立检查点', '动手前先看一下 git status。如果工作区不干净，先把现有改动提交、或者告诉我，确保我们从一个干净的检查点开始。', 'git status → git commit'],
@@ -129,6 +130,7 @@ export default function AICoding() {
 git worktree add ../proj-agent2 -b feature/agent2-task main
 # agent A 在原目录干活，agent B 在 ../proj-agent2 干活，互不干扰`}</div>
 
+      <Pitfall items={PITFALLS.aicoding} />
       <Quiz title="自测 · AI coding 中的 git" items={QUIZZES.aicoding} />
     </div>
   )

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { WF_NODES, WF_EDGES, WF_STEPS, WF_BAND, WF_COL, WF_FILL, WF_LABELS } from '../data.js'
+import Quiz from '../components/Quiz.jsx'
+import Pitfall from '../components/Pitfall.jsx'
+import { WF_NODES, WF_EDGES, WF_STEPS, WF_BAND, WF_COL, WF_FILL, WF_LABELS, QUIZZES, PITFALLS } from '../data.js'
 
 const N = {}
 WF_NODES.forEach((n) => { N[n.id] = { ...n, x: WF_COL(n.col), y: WF_BAND[n.band] } })
@@ -128,6 +130,9 @@ export default function Workflow() {
         <div style={{ fontSize: 14 }}>{d.cc}</div>
       </div>
       <p style={{ fontSize: 13, color: 'var(--color-text-secondary)' }}>💡 心智模型：{d.model}</p>
+
+      <Pitfall items={PITFALLS.workflow} />
+      <Quiz title="自测 · 实战工作流" items={QUIZZES.workflow} />
     </div>
   )
 }

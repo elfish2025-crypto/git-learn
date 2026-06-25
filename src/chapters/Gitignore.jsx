@@ -1,4 +1,7 @@
 import React from 'react'
+import Quiz from '../components/Quiz.jsx'
+import Pitfall from '../components/Pitfall.jsx'
+import { QUIZZES, PITFALLS } from '../data.js'
 
 export default function Gitignore() {
   return (
@@ -61,6 +64,9 @@ git commit -m "chore: 停止跟踪 node_modules"`}</div>
         <li>不知道某类项目该忽略啥？去 <a href="https://github.com/github/gitignore" target="_blank" rel="noreferrer">github/gitignore</a> 抄官方模板（Node、Python、Java… 都有）。</li>
         <li>想验证某个文件到底被哪条规则挡住了：<code>git check-ignore -v &lt;文件&gt;</code> 会告诉你命中了 .gitignore 的第几行。</li>
       </ul>
+
+      <Pitfall items={PITFALLS.gitignore} />
+      <Quiz title="自测 · .gitignore" items={QUIZZES.gitignore} />
     </div>
   )
 }

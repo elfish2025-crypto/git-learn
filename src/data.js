@@ -139,6 +139,12 @@ export const QUIZZES = {
     { q: 'git add 这个命令，本质是把改动从哪里搬到哪里？',
       o: [{ t: '工作区 → 暂存区', c: true }, { t: '暂存区 → 本地仓库', c: false }, { t: '本地仓库 → 远程', c: false }],
       e: 'add 把工作区的改动登记进暂存区；commit 才把暂存区固化成提交；push 才上传到远程。' },
+    { q: 'git commit 是把内容从哪里固化成一次历史快照？',
+      o: [{ t: '暂存区 → 本地仓库', c: true }, { t: '工作区 → 暂存区', c: false }, { t: '工作区 → 远程', c: false }],
+      e: 'commit 只打包"暂存区"里的内容。所以你能用 git add 精挑细选这次提交什么——这正是暂存区存在的意义。' },
+    { q: '你新建了一个文件 new.js，然后 git commit -am "x"。它会被提交吗？',
+      o: [{ t: '不会，-a 只管已跟踪文件，新文件要先 git add', c: true }, { t: '会，-a 会提交一切改动', c: false }, { t: '会，但只提交文件名', c: false }],
+      e: '-a 只自动暂存"已被 git 跟踪过"的文件的改动。全新文件是 untracked，必须先 git add 一次，git 才开始管它。' },
   ],
   undo: [
     { q: '一个有 bug 的提交已经 push 给团队、别人也基于它工作了。你应该用？',
@@ -150,6 +156,12 @@ export const QUIZZES = {
     { q: 'reset 和 rebase 都会"改写历史"，使用它们的共同前提是？',
       o: [{ t: '被操作的提交没 push、或只有你自己在用', c: true }, { t: '必须先 git pull', c: false }, { t: '团队所有人都在线', c: false }],
       e: '黄金法则：不要重写已经 push 且别人在用的历史。自己的私有分支随便 reset / rebase。' },
+    { q: 'git reset 的 --soft / --mixed / --hard，哪个会把工作区里没提交的改动也一起清掉？',
+      o: [{ t: '--hard', c: true }, { t: '--soft', c: false }, { t: '三个都会', c: false }],
+      e: '--soft 退回提交、改动留在暂存区；--mixed（默认）退回并取消暂存、改动留工作区；--hard 连工作区一起重置，未提交改动直接没（且不进 reflog）。' },
+    { q: '想撤销刚才的提交，但把改动原样留在工作区继续改，用？',
+      o: [{ t: 'git reset --soft HEAD~1', c: true }, { t: 'git reset --hard HEAD~1', c: false }, { t: 'git revert HEAD', c: false }],
+      e: '--soft 只把分支指针往回挪一格，改动全部保留（还在暂存区）。--hard 会丢改动；revert 是给已共享提交用的，会多出一个反向提交。' },
   ],
   remote: [
     { q: 'git fetch 和 git pull 的区别是？',
@@ -158,6 +170,12 @@ export const QUIZZES = {
     { q: '多人协作时，为了让历史更线性、少一堆 merge 提交，拉取常用？',
       o: [{ t: 'git pull --rebase', c: true }, { t: 'git pull --force', c: false }, { t: 'git push --rebase', c: false }],
       e: 'pull --rebase 把你本地的提交"重放"到远程最新提交之上，避免每次拉取都产生一个 merge 提交，历史更干净。' },
+    { q: 'git push 被拒，提示 rejected，通常意味着？',
+      o: [{ t: '远程上有你本地还没有的提交', c: true }, { t: '你的网络断了', c: false }, { t: '仓库满了', c: false }],
+      e: '别人先推了新提交，你的本地落后了。正确做法是先 git pull --rebase 把远程改动接上、解决冲突，再 push。绝不要直接 --force。' },
+    { q: '万不得已要改写已推送的历史，相对安全的强推是？',
+      o: [{ t: 'git push --force-with-lease', c: true }, { t: 'git push --force', c: false }, { t: 'git push -f -f', c: false }],
+      e: '--force-with-lease 会先检查"远程还是你上次看到的样子吗"，如果别人偷偷推了新东西就拒绝，避免误覆盖。裸 --force 不做这个检查，危险。' },
   ],
   conflict: [
     { q: '合并时出现冲突，git 自动帮你选了一边的代码吗？',
@@ -166,6 +184,9 @@ export const QUIZZES = {
     { q: '解决完冲突文件后，继续合并的正确动作是？',
       o: [{ t: 'git add <文件> 标记已解决，再 commit 或 rebase --continue', c: true }, { t: '直接 git push', c: false }, { t: '什么都不用做，保存文件即可', c: false }],
       e: '改好文件、删掉冲突标记后，要用 git add 告诉 git"这个冲突我处理好了"；merge 场景接着 git commit，rebase 场景用 git rebase --continue。' },
+    { q: '解决冲突时，如果忘了删掉 <<<<<<< ======= >>>>>>> 这些标记就提交了，会怎样？',
+      o: [{ t: '标记被当成代码提交进去，导致语法错误 / 运行报错', c: true }, { t: 'git 会自动帮你删掉', c: false }, { t: '没影响，只是注释', c: false }],
+      e: '这些标记就是普通文本，git 不会替你清理。提交前养成搜一下 <<<<<<< 的习惯，确认全清干净了。' },
   ],
   stash: [
     { q: '你正改到一半（工作区是脏的），突然要切到别的分支救急。最轻量的做法是？',
@@ -185,5 +206,78 @@ export const QUIZZES = {
     { q: '怎样的提交类提示词，能让 agent 产出可追溯的历史？',
       o: [{ t: '指明范围 + 规范 + 自查：「只提交登录校验这一处，用 feat(login): 格式，先 git diff 确认没混入调试代码」', c: true }, { t: '「提交一下」', c: false }, { t: '「把所有改动都 commit 了」', c: false }],
       e: '含糊的「提交一下」常换来「update files」这种无信息量的 message，还可能把无关改动混成一坨。给清范围、message 规范、并要求提交前 git diff 自查，才能得到原子、可追溯的提交。' },
+    { q: '让 agent 干活时，commit message 最好怎么安排？',
+      o: [{ t: '让 agent 写，但给定规范（如 Conventional Commits）并要求说清做了什么、为什么', c: true }, { t: '永远自己手写，不让 agent 碰', c: false }, { t: '让 agent 随便写，反正能改', c: false }],
+      e: 'agent 很擅长按规范写 message，省你的事；但要给它格式约束（feat/fix…）和"说清 what + why"的要求，否则容易得到没信息量的流水账。' },
+  ],
+  conceptmap: [
+    { q: '分支、HEAD、tag 三者的共同本质是什么？',
+      o: [{ t: '都是"指向某个提交"的指针', c: true }, { t: '都是提交的副本', c: false }, { t: '都是文件夹', c: false }],
+      e: '这是 git 最核心的一招：它们都只是指针。区别只在——分支随提交移动、HEAD 指向你当前所在、tag 钉死不动。提交本身（快照）才是不可变的实体。' },
+    { q: 'git checkout <某提交hash> 后直接改代码、提交，然后切回 main——你的新提交可能怎样？',
+      o: [{ t: '可能丢失：处于 detached HEAD，没有分支指着这些提交', c: true }, { t: '自动合并进 main', c: false }, { t: '自动变成一个新分支', c: false }],
+      e: '直接 checkout 到一个提交是 detached HEAD：你站在提交上而非分支上，新提交没有分支引用，切走后很容易被回收。要保留先 git switch -c 新分支。' },
+  ],
+  workflow: [
+    { q: 'rebase 过程中解决完一个冲突，继续重放剩下提交的命令是？',
+      o: [{ t: 'git rebase --continue', c: true }, { t: 'git commit', c: false }, { t: 'git merge --continue', c: false }],
+      e: 'rebase 冲突解决后（git add 标记已解决）用 git rebase --continue。注意：merge 冲突才是 git commit 收尾，两者不要混。' },
+    { q: 'rebase 到一半觉得不对劲，想完全放弃、回到 rebase 之前的状态？',
+      o: [{ t: 'git rebase --abort', c: true }, { t: 'git reset --hard', c: false }, { t: 'git revert', c: false }],
+      e: 'git rebase --abort 会干净地回到开始 rebase 之前的样子，是你的"逃生口"。' },
+  ],
+  gitignore: [
+    { q: '.gitignore 里写 build 和写 build/ 有什么区别？',
+      o: [{ t: 'build 同名文件和目录都忽略；build/ 只忽略目录', c: true }, { t: '完全一样', c: false }, { t: 'build/ 会忽略所有子文件，build 不会', c: false }],
+      e: '结尾的斜杠 / 限定"只匹配目录"。不带斜杠时，同名的文件和目录都会被忽略。' },
+    { q: '一个文件早就被 git add 跟踪了，现在把它写进 .gitignore，会生效吗？',
+      o: [{ t: '不会，要先 git rm --cached 把它移出跟踪', c: true }, { t: '会，立刻不再跟踪', c: false }, { t: '会，下次 commit 自动忽略', c: false }],
+      e: '.gitignore 只对"未跟踪"的文件生效。已被跟踪的要先 git rm --cached <文件>（保留磁盘文件），再提交，之后 .gitignore 才管得住它。' },
+  ],
+}
+
+// ============ 各章避坑指南 ============
+export const PITFALLS = {
+  fourareas: [
+    { trap: 'git add 之后又改了同一个文件，以为新改动也进了暂存区。', fix: 'add 只暂存"那一刻"的快照；之后的新改动要再 git add 一次。提交前用 git status / git diff --staged 确认。' },
+    { trap: '以为 git commit -am 能提交一切。', fix: '-a 只覆盖"已跟踪"文件；新建文件（untracked）必须先单独 git add，否则不会被提交。' },
+    { trap: 'git commit 忘了写 -m，掉进一个陌生的全屏编辑器出不来。', fix: '那是 vim：输入信息后按 Esc，再输入 :wq 回车保存退出；想放弃用 :q! 。' },
+  ],
+  conceptmap: [
+    { trap: 'git checkout 到某个历史提交上改代码、提交，切走后提交"不见了"。', fix: '那是 detached HEAD——没有分支指着你的新提交。先 git switch -c <新分支> 把它"接住"，再切走。' },
+    { trap: '以为删掉分支，上面的提交就被删了。', fix: '提交是独立对象，分支只是指针。删分支不删提交（仍在 reflog 里可救）；但长期无任何引用的提交最终会被垃圾回收。' },
+  ],
+  workflow: [
+    { trap: '在 main 上直接开发、直接提交。', fix: '养成在 feature 分支干活的习惯，main 始终保持可发布、随时能拉新分支。' },
+    { trap: 'rebase 遇冲突时慌了，直接 git commit。', fix: 'rebase 收尾用 git rebase --continue；想彻底放弃用 git rebase --abort 回到原点。' },
+    { trap: '默认 merge 是 fast-forward，事后看不出这是一次特性合并。', fix: '想保留"完整特性合入"的痕迹，用 git merge --no-ff 生成合并提交。' },
+  ],
+  decision: [
+    { trap: 'git reset --hard 前没注意工作区还有没提交的改动，一把全没了。', fix: '--hard 清空未提交改动且不进 reflog（reflog 只记提交）。先 git stash 或 git status 确认，再动手。' },
+    { trap: '对已经 push 的提交用 reset 再 --force 强推，把队友的提交搞丢。', fix: '已共享历史一律用 revert，不要 reset + force。' },
+    { trap: '以为 git revert 会"删掉"那个坏提交。', fix: 'revert 不删历史，坏提交仍在，只是新增一个反向提交抵消它——这正是它对协作安全的原因。' },
+  ],
+  remote: [
+    { trap: 'push 被 rejected，直接 git push --force 解决。', fix: 'force 会覆盖远程、可能抹掉别人的提交。正确做法：git pull --rebase 接上远程改动，再 push；不得已才用 --force-with-lease。' },
+    { trap: 'git pull 后历史里凭空多出一堆 "Merge branch main" 提交。', fix: '默认 pull 会 merge。想要线性历史用 git pull --rebase，或设 git config --global pull.rebase true。' },
+    { trap: 'clone 了别人的开源仓库，直接改 main 却推不上去（没权限）。', fix: '开源协作要先 Fork 到自己名下，改完发 PR；或被加为协作者后走 feature 分支 + PR。' },
+  ],
+  conflict: [
+    { trap: '解决冲突时漏删了 <<<<<<< ======= >>>>>>> 标记就提交。', fix: '这些标记会被当成代码提交进去导致报错。提交前搜一下 <<<<<<< 确认清干净。' },
+    { trap: '冲突一多就 git checkout --theirs . 一把梭。', fix: 'ours / theirs 在 merge 和 rebase 里含义相反，盲用会丢掉想留的改动。拿不准就逐文件看内容手动解决。' },
+  ],
+  stash: [
+    { trap: 'git stash 后切去干别的，过几天忘了抽屉里还压着东西。', fix: 'stash 是临时抽屉不是长期仓库。常用 git stash list 检查；要长期保存请用提交或分支。' },
+    { trap: 'git stash 没带 -u，新建的文件没被收起来，切分支时还在。', fix: '默认不收未跟踪文件。要连新文件一起收用 git stash -u。' },
+    { trap: 'git stash pop 遇到冲突，以为 stash 内容丢了。', fix: 'pop 冲突时 stash 不会被删除（仍在栈里）。解决冲突、git add 后，确认无误再手动 git stash drop。' },
+  ],
+  gitignore: [
+    { trap: '把 node_modules 写进 .gitignore 了，但它还是被跟踪、还在被提交。', fix: '.gitignore 只对未跟踪文件生效。已跟踪的要先 git rm -r --cached node_modules/ 再提交。' },
+    { trap: '想忽略目录却写成 logs（没带斜杠），结果同名文件也被忽略。', fix: '只忽略目录请写 logs/（带斜杠）；不确定哪条规则命中用 git check-ignore -v <文件> 排查。' },
+  ],
+  aicoding: [
+    { trap: '没先 commit 就让 agent 大改，改完发现不如从前，却回不去了。', fix: '放手前先 commit 建检查点：之后 git diff 看得清它改了啥、git restore 一键回得去。' },
+    { trap: '图省事给 agent 开了所有 git 命令的自动放行。', fix: '只读命令（status/diff/log）放心自动；push --force / clean -fd / 改写历史这类红线务必保留人工确认。' },
+    { trap: '让 agent 把一大坨混杂改动一次性提交。', fix: '要求它按逻辑拆成原子提交，每个 commit 只做一件事——出问题能精准 revert 单个提交。' },
   ],
 }

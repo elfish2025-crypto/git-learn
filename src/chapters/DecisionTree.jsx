@@ -1,6 +1,7 @@
 import React from 'react'
 import Quiz from '../components/Quiz.jsx'
-import { QUIZZES } from '../data.js'
+import Pitfall from '../components/Pitfall.jsx'
+import { QUIZZES, PITFALLS } from '../data.js'
 
 export default function DecisionTree() {
   return (
@@ -70,6 +71,7 @@ export default function DecisionTree() {
         <li><strong style={{ fontWeight: 500 }}>reset --hard 不是真删除——有后悔药。</strong> 被丢的提交进 reflog，90 天内能捞回：<code>git reflog</code> 找 hash，<code>git reset --hard &lt;hash&gt;</code> 救回。</li>
       </ol>
 
+      <Pitfall items={PITFALLS.decision} />
       <Quiz title="自测 · 回退与搬运" items={QUIZZES.undo} />
     </div>
   )
