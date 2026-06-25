@@ -175,4 +175,15 @@ export const QUIZZES = {
       o: [{ t: 'pop 取回并从栈里删除；apply 取回但保留在栈里', c: true }, { t: '完全一样', c: false }, { t: 'pop 只取暂存区，apply 只取工作区', c: false }],
       e: 'apply 取回改动但 stash 仍留在栈里（可重复应用到多个分支）；pop = apply + drop，取回后顺手把这条 stash 删掉。' },
   ],
+  aicoding: [
+    { q: '放手让编程 agent 大改代码之前，最该先做的一步是？',
+      o: [{ t: '先 commit，建立一个干净的检查点', c: true }, { t: '把 agent 的权限全开，省得它问', c: false }, { t: '先 git push 到远程备份', c: false }],
+      e: '先 commit 让工作区变干净，好处有两个：① agent 改完你能用 git diff 一眼看清它到底动了什么；② 一旦改飞，git restore / reset 一键回到这个检查点。这是放手让 agent 干活的底气。' },
+    { q: '下面哪个 git 操作最不应该让 agent 自动放行执行？',
+      o: [{ t: 'git push --force（改写远程历史）', c: true }, { t: 'git diff（只读，看改动）', c: false }, { t: 'git status（只读，看状态）', c: false }],
+      e: '只读命令（status/diff/log）放心让 agent 用。但 push --force 会改写已共享的远程历史、可能抹掉别人的提交，属于"必须你亲自把关"的红线操作——绝不该自动放行。' },
+    { q: '怎样的提交类提示词，能让 agent 产出可追溯的历史？',
+      o: [{ t: '指明范围 + 规范 + 自查：「只提交登录校验这一处，用 feat(login): 格式，先 git diff 确认没混入调试代码」', c: true }, { t: '「提交一下」', c: false }, { t: '「把所有改动都 commit 了」', c: false }],
+      e: '含糊的「提交一下」常换来「update files」这种无信息量的 message，还可能把无关改动混成一坨。给清范围、message 规范、并要求提交前 git diff 自查，才能得到原子、可追溯的提交。' },
+  ],
 }
